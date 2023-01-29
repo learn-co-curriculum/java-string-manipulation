@@ -13,7 +13,7 @@ until now, we haven't really talked about various methods in the `String` class 
 We know that it is an immutable reference type and can be made up of a sequence of
 characters, but can it do more?
 
-In this lesson we will explore some of the methods available for the `String` class,
+In this lesson we will explore some methods available for the `String` class,
 but the complete list is available at
 [Java 17 String API](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html).
 
@@ -112,6 +112,22 @@ The value returned from each call to `length()` is determined
 by the character sequence stored in the `String` object referenced
 in the method call.
 
+
+<details>
+    <summary>The code below should print <code>5</code>, but it won't compile.  Can you identify and fix the error?
+    </summary>
+
+  <p>Answer: <br>
+  The <code>length()</code> instance method does not take a parameter and should be invoked using dot notation as shown:<br>
+  <code>System.out.println( fruit.length() );</code></p> 
+  
+</details>
+
+```java
+String fruit = "apple";
+System.out.println( length(fruit) );
+```
+
 ### Concatenating Strings
 
 | String Method                    | Description                                                  |
@@ -191,6 +207,33 @@ since strings are immutable.
 You can step through this program at [this link](https://pythontutor.com/visualize.html#code=public%20class%20StringConcatExample%20%7B%0A%20%20public%20static%20void%20main%28String%5B%5D%20args%29%20%7B%0A%20%20%20%20String%20string1%20%3D%20%22Tom%22%3B%0A%20%20%20%20String%20string2%20%3D%20%22Cat%22%3B%0A%0A%20%20%20%20String%20result%20%3D%20string1.concat%28string2%29%3B%20//TomCat%0A%0A%20%20%20%20System.out.println%28result%29%3B%0A%20%20%7D%0A%7D&cumulative=false&curInstr=0&heapPrimitives=true&mode=display&origin=opt-frontend.js&py=java&rawInputLstJSON=%5B%5D&textReferences=false).
 
 
+<details>
+    <summary>What is the output from the code shown below?  Does <code>s1.concat(s2);</code> change <code>s1</code> or <code>s2</code>?
+    </summary>
+
+  <p>The code prints: <br>
+  red<br>apple</p> 
+
+  <p>Since strings are immutable, the line of code <code>s1.concat(s2);</code> does not change <code>s1</code> or <code>s2</code>.<br>
+  The method call <code>s1.concat(s2);</code>  creates and returns a new string, but the new string
+  is discarded since it is not assigned to a variable or passed as an argument to another method, so this
+  is not a useful line of code! </p>
+  <p>We would need to use an assignment statement to store
+  the new string if we wanted to use it elsewhere in the program:<br>
+  <code>String s3 = s1.concat(s2);</code><br>
+  <code>System.out.println(s3); //redapple</code></p>
+
+</details>
+
+```java
+String s1 = "red";
+String s2 = "apple";
+s1.concat(s2);    //useless!
+System.out.println( s1 );
+System.out.println( s2 );
+```
+
+
 ### Changing the Case
 
 | String Method               | Description                                                  |
@@ -268,6 +311,34 @@ The following output of this would be:
 a
 ```
 
+Recall from the previous lesson we iterated over the characters in a string
+by converting the string to an array of characters using the `toCharArray()`
+method:
+
+```java
+public static boolean containsA(String str) {
+    for (char c : str.toCharArray()) {
+        if (c == 'A') {
+            return true;
+        }
+    }
+    return false;
+}
+```
+
+We can avoid the need to convert to a character array by using the `charAt(int)` method.
+The loop uses positional indexing to obtain each character in the string:
+
+```java
+public static boolean containsA(String str) {
+    for (int i = 0; i < str.length(); i++) {
+        if (str.charAt(i) == 'A') {
+            return true;
+        }
+    }
+    return false;
+}
+```
 
 ### Contains 
 
@@ -308,10 +379,10 @@ the `contains()` method will return false.
 
 ### Substring
 
-| String Method                                         | Description                                                                                                                                           |
-|-------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| public String substring(int beginIndex)               | Returns a string that is a substring of this string beginning with the character at the specified index and extends to the end of this string.        |
-| public String substring(int beginIndex, int endIndex) | Returns a string that is a substring of this string beginning with the character at the first index and extends to the character at the second index. |
+| String Method                                         | Description                                                                                                                                               |
+|-------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| public String substring(int beginIndex)               | Returns a string that is a substring of this string beginning with the character at the specified index and extends to the end of this string.            |
+| public String substring(int beginIndex, int endIndex) | Returns a string that is a substring of this string beginning with the character at the first index and extends to the character before the second index. |
 
 
 When looking for a specific sequence of characters within a `String`, we tend
@@ -328,8 +399,8 @@ new `String` object by copying part of an existing `String`:
 public class StringSubstringExample {
     public static void main(String[] args) {
         String greeting = "HELLO WORLD";
-        String substring1 = greeting.substring(6);
-        String substring2 = greeting.substring(0, 5);
+        String substring1 = greeting.substring(6);  //characters at indices 6,7,8,9,10
+        String substring2 = greeting.substring(0, 5); //characters at indices 0,1,2,3,4
         System.out.println(greeting);
         System.out.println(substring1);
         System.out.println(substring2);
@@ -339,7 +410,7 @@ public class StringSubstringExample {
 
 Recall that a string uses 0-based indexing, just like an array:
 
-![String with Indices](https://curriculum-content.s3.amazonaws.com/java-mod-2/string-manipulation/String-Index.png)
+![String with Indices](https://curriculum-content.s3.amazonaws.com/6676/java-mod2-strings/hello_world.png)
 
 The program prints:
 
@@ -348,6 +419,7 @@ HELLO WORLD
 WORLD
 HELLO
 ```
+
 Let's look a little closer at these two different `substring()` methods:
 
 
@@ -366,7 +438,6 @@ Let's look a little closer at these two different `substring()` methods:
 
 ### Position of a substring
 
-
 | String Method                   | Description                                                                               |
 |---------------------------------|-------------------------------------------------------------------------------------------|
 | public int indexOf(String str)  | Returns the index within this string of the first occurrence of the specified substring.  |
@@ -377,26 +448,53 @@ The `indexOf` method returns the starting index of a substring.
 Since string indexing in Java is 0-based, the method returns `-1`
 if the substring is not found.
 
+![hello there world](https://curriculum-content.s3.amazonaws.com/6676/java-mod2-strings/hello_there_world.png)
+
 ```java
-String greeting = "hello there world!";
-System.out.println(greeting.indexOf("the")); //6 is the starting position of the substring "the"
+String greeting = "HELLO THERE WORLD!";
+System.out.println(greeting.indexOf("THE")); //6 is the starting position of the substring "THE"
 System.out.println(greeting.indexOf("hi")); //-1 indicates "hi" is not found
 ```
 
 By default, the `indexOf` method starts looking at the beginning of the string.
-The code below prints `1`, the position of the "e" in the word "hello".
+The code below prints `1`, the position of the "E" in the word "hello".
 
 ```java
-String greeting = "hello there world!";
-System.out.println(greeting.indexOf("e")); //1
+String greeting = "HELLO THERE WORLD!";
+System.out.println(greeting.indexOf("E")); //1
 ```
 We can however pass a second parameter that states the starting index to begin the substring
-search.  The following code starts looking for "e" beginning at index 5, which is the space after "hello".
-The code prints `8`, the position of the first "e" in the word "there". 
+search.  The following code starts looking for "E" beginning at index 5, which is the space after "HELLO".
+The code prints `8`, the position of the first "E" in the word "THERE". 
 
 ```java
-String greeting = "hello there world!";
-System.out.println(greeting.indexOf("e", 5)); //8, the position of "e" in "there"
+String greeting = "HELLO THERE WORLD!";
+System.out.println(greeting.indexOf("E", 5)); //8, the position of first "E" in "THERE"
+```
+
+<details>
+    <summary>What is the output for the code shown below?
+    </summary>
+
+  <p>The code prints: <br>
+  3<br>7<br>11<br>-1<br>742<br>10;</p>
+
+</details>
+
+![string index](https://curriculum-content.s3.amazonaws.com/6676/java-mod2-strings/string_index_check.png)
+
+```java
+String s = "abc=742;xyz=10;";
+int index1 = s.indexOf("=");
+int index2 = s.indexOf(";");
+int index3 = s.indexOf("=", index2);
+int index4 = s.indexOf("!");
+System.out.println(index1);
+System.out.println(index2);
+System.out.println(index3);
+System.out.println(index4);
+System.out.println(s.substring(index1+1,index2));
+System.out.println(s.substring(index3+1));
 ```
 
 ### Replacing Characters
