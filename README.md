@@ -356,9 +356,9 @@ the sequence is found, it will return true, else it will return false.
 ```java
 public class StringContainsExample {
     public static void main(String[] args) {
-        String greeting = "Hello World";
+        String greetings = "Hello World";
 
-        boolean containsCat = greeting.contains("cat");
+        boolean containsCat = greetings.contains("cat");
         if (containsCat) {
             System.out.println("We found the cat!");
         } else {
@@ -370,11 +370,11 @@ public class StringContainsExample {
 
 ![string contains](https://curriculum-content.s3.amazonaws.com/6676/java-mod2-strings/string_contains.png)
 
-In the example above, we can check to see if the `String greeting` contains the
+In the example above, we can check to see if the `String greetings` contains the
 character sequence  `"cat"` by calling the `contains()` method. The character sequence of
 interest will be passed as a parameter to the `contains()` method and will
-search the original `String` object, `greeting` to see if the sequence is found
-within the value. In this case, the sequence `"cat"` is not contained within `greeting`, so
+search the original `String` object, `greetings` to see if the sequence is found
+within the value. In this case, the sequence `"cat"` is not contained within `greetings`, so
 the `contains()` method will return false.
 
 ### Substring
@@ -431,7 +431,7 @@ Let's look a little closer at these two different `substring()` methods:
   the ending index of the original `String`. This method returns a substring of
   the original `String` starting at the starting index and ending at the
   ending index. It should be noted that the ending index is **not** inclusive,
-  so `greeting.substring(0,5)` will return only "Hello" and not the space after
+  so `greeting.substring(0,5)` will return only "HELLO" and not the space after
   it.
 
 ![string substring](https://curriculum-content.s3.amazonaws.com/6676/java-mod2-strings/string_substring.png)
@@ -457,7 +457,7 @@ System.out.println(greeting.indexOf("hi")); //-1 indicates "hi" is not found
 ```
 
 By default, the `indexOf` method starts looking at the beginning of the string.
-The code below prints `1`, the position of the "E" in the word "hello".
+The code below prints `1`, the position of the "E" in the word "HELLO".
 
 ```java
 String greeting = "HELLO THERE WORLD!";
